@@ -1,57 +1,26 @@
 import React from 'react';
+import './App.scss';
+import { BrowserRouter } from 'react-router-dom';
+import { Layout } from 'antd';
+import Routing from './routing';
+import SiderMenu from './component/SiderMenu';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+
+const { Header, Content, Sider } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Header className="site-header">
+          <img src={logo} className="App-logo" alt="logo" />
+        </Header>
+        <Layout className="site-layout">
+          <Sider width={200} className="site-sider"><SiderMenu /></Sider>
+          <Content className="content-layout"><Routing /></Content>
+        </Layout>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
