@@ -1,17 +1,22 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { createStore, applyMiddleware } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
+import saga from '../sagas';
+import reducer from '../reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export default function configureStore() {
+  const sagaMiddleware = createSagaMiddleware<typeof saga>();
+  const composeEnhancers = composeWithDevTools({ trace: true });
+  
+  const storeCreator = createStore(
+    reducer,
+    composeEnhancers(applyMiddleware(sagaMiddleware)),
+  );
+  
+  sagaMiddleware.run(saga);
+  
+  return storeCreator;
+}
+
+export const store = configureStore();
