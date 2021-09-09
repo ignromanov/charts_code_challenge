@@ -9,10 +9,8 @@ const MainPage: FC = () => {
   const gotoChartPage = (route: Routes) => () => history.push(route);
   
   return (
-    <>
-      <Card title="Main page">
-        <Alert type="info" message="Please select a metric you would like to display" />
-      </Card>
+    <Card title="Main page">
+      <Alert type="info" message="Please select a metric you would like to display" />
       <div className="row-of-charts-links">
         <div className="linked-card">
           <div className="linked-card__box" onClick={gotoChartPage(Routes.Difficulty)} />
@@ -23,7 +21,7 @@ const MainPage: FC = () => {
           <div className="linked-card__title">Hash rate Chart</div>
         </div>
       </div>
-    </>
+    </Card>
   );
 };
 
