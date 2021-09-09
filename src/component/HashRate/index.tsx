@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useSelector } from 'react-redux';
 import {
@@ -17,9 +17,12 @@ import {
 } from '../../constants/highcharts';
 import { Card, Spin, Result } from 'antd';
 import AppHighcharts from '../AppHighcharts';
+import { Currencies } from '../../constants';
+import CurrencySelector from '../CurrencySelector';
 
 const HashRate: FC = () => {
 	const dispatch = useAppDispatch();
+	const [currency, setCurrency] = useState<Currencies>(Currencies.BTC);
 	const isHashRateLoading = useSelector(getIsHashRateLoading);
 	const isPriceUSDCloseLoading = useSelector(getIsPriceUSDCloseLoading);
 	const hashRateSeriesData = useSelector(getHashRateSeriesData);
@@ -27,9 +30,9 @@ const HashRate: FC = () => {
 	const isSomethingWentWrong = !isHashRateLoading && !isPriceUSDCloseLoading && (hashRateSeriesData === null || priceUSDCloseSeriesData === null);
 	
 	useEffect(() => {
-		dispatch(requestHashRate());
-		dispatch(requestPriceUsdClose());
-	}, [dispatch]);
+		dispatch(requestHashRate(currency));
+		dispatch(requestPriceUsdClose(currency));
+	}, [dispatch, currency]);
 	
 	const series = useMemo<AppHighchartsProps['series']>(() => [{
 			...PriceUSDCloseSeriesOptions,
@@ -45,6 +48,7 @@ const HashRate: FC = () => {
 	
 	return (
 		<Card title="Hash rate">
+			<CurrencySelector currency={currency} setCurrency={setCurrency} />
 			<Spin spinning={isHashRateLoading || isPriceUSDCloseLoading} tip="Loading..." size="large">
 				{!isSomethingWentWrong &&
          <AppHighcharts
