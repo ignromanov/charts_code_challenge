@@ -1,0 +1,38 @@
+.row-of-charts-links {
+  display: flex;
+  gap: 25px;
+  margin: 25px;
+
+  .linked-card {
+    flex: 1;
+    height: 336px;
+
+    background: rgba(240, 242, 245, 0.5);
+    border: 1px solid #DDDDDD;
+    box-sizing: border-box;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+
+    &__box {
+      height: 272px;
+      margin: 18px 18px 0;
+      background: #FFFFFF;
+      border: 1px solid #DDDDDD;
+      box-sizing: border-box;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    &__title {
+      margin: 15px;
+      font-family: Inter, sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 17px;
+
+      text-align: center;
+      color: #000000;
+    }
+  }
+}
